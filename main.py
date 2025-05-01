@@ -282,7 +282,7 @@ def filter_by_category(category):
 def Contacts_App():
     st.header("Contact List")
 
-    st.sidebar.title("Contact list Functions"):
+    st.sidebar.title("Contact list Functions")
     st.header("Navigation")
     function_option = st.selectbox(
             "Contact List Functions",
