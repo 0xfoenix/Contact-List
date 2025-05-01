@@ -191,7 +191,7 @@ def sort_contacts(field, ascending=True):
     
     sorted_contacts = sorted(
         st.session_state.contact_list,
-        key=lambda contact:getattr(contact, field),
+        key=lambda contact: getattr(contact, field.lower()),
         reverse=not ascending
     )
 
