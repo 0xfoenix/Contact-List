@@ -455,7 +455,7 @@ def Contacts_App():
 
         with tab1:
             st.header("Save Contacts")
-            filename = st.text_input("Please enter ilename to save")
+            filename = st.text_input("Please enter filename to save")
             if st.button("Save to file"):
                 if filename:
                     results = save_contacts_to_file(filename)
@@ -467,7 +467,7 @@ def Contacts_App():
 
         with tab2:
             st.header("Load Contacts")
-            load_filename = st.tect_input("Enter filename to load")
+            load_filename = st.text_input("Enter filename to load")
 
             if st.button("Load from file"):
                 if load_filename:
@@ -478,7 +478,7 @@ def Contacts_App():
                 
         with tab3:
             st.header("Import Contacts")
-            uploaded_file =st.file_upload("Upload CSV or JSON file", type=["csv", "json"])
+            uploaded_file = st.file_upload("Upload CSV or JSON file", type=["csv", "json"])
             if uploaded_file is not None:
                 if st.button("Import"):
                     result = import_contacts(uploaded_file)
