@@ -70,7 +70,7 @@ def search_contact(query):
                 "Phone": contact.phone,
                 "Email": contact.email,
                 "Category": contact.category,
-                "Favorite": "Yes" if contact.favorite else "N"
+                "Favorite": "Yes" if contact.favorite else "No"
             })
 
     return search_results
@@ -282,13 +282,12 @@ def filter_by_category(category):
 def Contacts_App():
     st.header("Contact List")
 
-    st.sidebar.title("Contact list Functions")
-    st.header("Navigation")
+    st.sidebar.title("Navigation")
     function_option = st.sidebar.selectbox(
             "Contact List Functions",
             ["Add Contact", "View Contact", "Search Contact", "Edit Contact", 
              "File Operations", "Sort Contacts", "View Category", "View Favorite",
-             "Contact Cards"]
+             "Add Favorite", "Contact Cards"]
         )
 
     if function_option == "Add Contact":
@@ -373,7 +372,7 @@ def Contacts_App():
 
         if query:
             if search_results:
-                search_df = pd.DataFrame(search_contact(query))
+                search_df = pd.DataFrame(search_results)
                 st.dataframe(search_df)
 
                 contact_indices = []
@@ -432,21 +431,21 @@ def Contacts_App():
                     edit_favorite = st.checkbox("Favorite", value=contact.favorite)
 
 
-                if st.form_submit_button("Edit"):
-                    try:
-                        if not edit_name or not edit_phone or not edit_email:
-                            st.error("All fields are required")
-                        else:
-                            
-                            result = update_contact(index, edit_name, edit_phone, edit_email, edit_category, edit_favorite)
-                            st.success(result)
+                    if st.form_submit_button("Edit"):
+                        try:
+                            if not edit_name or not edit_phone or not edit_email:
+                                st.error("All fields are required")
+                            else:
+                                
+                                result = update_contact(index, edit_name, edit_phone, edit_email, edit_category, edit_favorite)
+                                st.success(result)
 
-                            if st.session_state.filename:
-                                filename = st.session_state.filename[-1]
-                                save_contacts_to_file(filename)
-                                st.success(f"Contacts saved to {filename}.csv")
-                    except ValueError as e:
-                        st.error(f"Error: {e}")
+                                if st.session_state.filename:
+                                    filename = st.session_state.filename[-1]
+                                    save_contacts_to_file(filename)
+                                    st.success(f"Contacts saved to {filename}.csv")
+                        except ValueError as e:
+                            st.error(f"Error: {e}")
 
     # File Operations         
     elif function_option == "File Operations":
@@ -456,7 +455,7 @@ def Contacts_App():
 
         with tab1:
             st.header("Save Contacts")
-            filename - st.text_input("Please enter ilename to save")
+            filename = st.text_input("Please enter ilename to save")
             if st.button("Save to file"):
                 if filename:
                     results = save_contacts_to_file(filename)
@@ -503,7 +502,7 @@ def Contacts_App():
         if not st.session_state.contact_list:
             st.info("No contacts to sort. Please add contacts")
         else:
-            sort_field = st.selectbox("Sort By", options=list ,placeholder="Select Column(s) to sort by")
+            sort_field = st.selectbox("Sort By", options=["Name", "Phone", "Email", "Category"],placeholder="Select Column(s) to sort by")
             ascending = st.checkbox("Ascending Order", value=True)
 
             if st.button("Sort"):
@@ -538,7 +537,7 @@ def Contacts_App():
                     st.info(f"No contacts in category '{select}'")
 
     # View Categories
-    elif function_option == "View favorite":
+    elif function_option == "View Favorite":
         st.title("Favorite Contacts")
 
         favorites = filter_favorite()
@@ -576,7 +575,7 @@ def Contacts_App():
             place_holder = "https://www.nosm.ca/our-community/indigenous-medical-education/indigenous-affairs-office/default-profile-picture-avatar-photo-placeholder-vector-illustration-2/"
 
             for i in range(0, len(st.session_state.contact_list), contacts_per_row):
-                cols = st.columns(contacts_per_row)
+                cols = st.columns(contacts_per_row, border=True)
                 for j in range(contacts_per_row):
                     if i+j < len(st.session_state.contact_list):
                         contact = st.session_state.contact_list[i+j]
