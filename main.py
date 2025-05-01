@@ -301,33 +301,33 @@ def Contacts_App():
                 category = st.selectbox("Category", options=st.session_state.category)
                 favorite = st.checkbox("Add to Favorites")
     
-            if st.form_submit_button("Add contact"):
-                if name and phone and email:
-                    duplicate = False
-                    for contact in st.session_state.contact_list:
-                        if name == contact.name and phone == contact.phone and email == contact.email:
-                            duplicate = True
-                            break
-                    if not duplicate:
-                        try:
-                            new_contact = Contact(name, phone, email, category, favorite)
-                            add_contact(new_contact)
-                            st.success(f"Contact {name} has been added to the list")
+                if st.form_submit_button("Add contact"):
+                    if name and phone and email:
+                        duplicate = False
+                        for contact in st.session_state.contact_list:
+                            if name == contact.name and phone == contact.phone and email == contact.email:
+                                duplicate = True
+                                break
+                        if not duplicate:
+                            try:
+                                new_contact = Contact(name, phone, email, category, favorite)
+                                add_contact(new_contact)
+                                st.success(f"Contact {name} has been added to the list")
                 
-                            # Save File if name exists
-                            if st.session_state.filename:
+                                # Save File if name exists
+                                if st.session_state.filename:
                                     
-                                filename = st.session_state.filename[-1]
-                                save_contacts_to_file(filename)
-                                st.success("Autosave successful")
+                                    filename = st.session_state.filename[-1]
+                                    save_contacts_to_file(filename)
+                                    st.success("Autosave successful")
 
-                        except ValueError as e:
-                            st.error(f"Error: {e}")
-                    else:
-                        st.error("Contact already exists")
+                            except ValueError as e:
+                                st.error(f"Error: {e}")
+                        else:
+                            st.error("Contact already exists")
         
-            else:
-                st.error(f"Please input the correct details")
+                else:
+                    st.error(f"Please input the correct details")
         
 
         # View Contacts
