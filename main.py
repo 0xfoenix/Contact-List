@@ -478,7 +478,7 @@ def Contacts_App():
                 
         with tab3:
             st.header("Import Contacts")
-            uploaded_file = st.file_upload("Upload CSV or JSON file", type=["csv", "json"])
+            uploaded_file = st.file_uploader("Upload CSV or JSON file", type=["csv", "json"])
             if uploaded_file is not None:
                 if st.button("Import"):
                     result = import_contacts(uploaded_file)
