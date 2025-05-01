@@ -131,10 +131,10 @@ def load_contact_from_file(filename):
         return f"Error loading file: {e}"
 
 # Edit Contact
-def update_contact(index, name, phone, email):
+def update_contact(index, name, phone, email, category, favorite):
     if 0 <= index < len(st.session_state.contact_list):
         try:
-            updated_contact = Contact(name, phone, email)
+            updated_contact = Contact(name, phone, email, category, favorite)
             
             st.session_state.contact_list[index] = updated_contact
 
