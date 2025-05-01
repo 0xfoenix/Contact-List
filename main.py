@@ -53,7 +53,7 @@ def view_all_contacts():
 
 # Search contacts
 def search_contact(query):
-    if st.session_state.contact_list:
+    if not st.session_state.contact_list:
         return []
     query = query.lower() if query else ""
     search_results = []
@@ -186,7 +186,7 @@ def filter_favorite():
 
 # Sort contacts
 def sort_contacts(field, ascending=True):
-    if st.session_state.contact_list:
+    if not st.session_state.contact_list:
         return []
     
     sorted_contacts = sorted(
