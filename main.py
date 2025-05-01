@@ -284,7 +284,7 @@ def Contacts_App():
 
     st.sidebar.title("Contact list Functions")
     st.header("Navigation")
-    function_option = st.selectbox(
+    function_option = st.sidebar.selectbox(
             "Contact List Functions",
             ["Add Contact", "View Contact", "Search Contact", "Edit Contact", 
              "File Operations", "Sort Contacts", "View Category", "View Favorite",
